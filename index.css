@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #0a0a0a;
+  color: #ffffff;
+}
+
+/* Custom scrollbar for premium feel */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #f43f5e;
+}
+
+/* Hide scrollbar visually while keeping the element scrollable (used by
+   horizontally-scrolling widgets like the skills graph) */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Respect the visitor's OS-level motion preference: tone down/disable the
+   decorative animation-heavy effects (blobs, shimmer, particle canvases,
+   spinning geometry) instead of forcing motion on everyone. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .motion-safe-only {
+    display: none !important;
+  }
+}
+
+/* Hide the native cursor only where our custom cursor (CustomCursor.tsx)
+   actually takes over: a real mouse, and motion not reduced. Kept in sync
+   with that component's own enable check — never hide the native cursor
+   unconditionally, that's a broken-in-devtools trap waiting to happen. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  body {
+    cursor: none;
+  }
+  a,
+  button,
+  [role='button'],
+  input,
+  textarea,
+  select {
+    cursor: none;
+  }
+}
